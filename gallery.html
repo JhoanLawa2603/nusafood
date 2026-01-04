@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery Nusantara - Filterable</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    :root { --primary-color: #ffc107; }
+    body { padding-top: 80px; background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+    /* Hero Banner Gallery */
+    .hero-banner {
+      height: 400px;
+      /* Pastikan file img/Makanan 4.jpg ada di folder img Anda */
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/Makanan 4.jpg'); 
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero-banner h1 { font-size: 3.5rem; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+
+    /* Card Styling */
+    .card { transition: transform 0.3s; border: none; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-radius: 15px; overflow: hidden; position: relative; }
+    .card:hover { transform: translateY(-10px); }
+    .card-img-top { height: 200px; object-fit: cover; }
+
+    /* Filter Button Styling */
+    .filter-container { text-align: center; margin-bottom: 40px; }
+    .btn-filter { 
+        border: 2px solid #ffc107; 
+        background: white; 
+        font-weight: bold; 
+        border-radius: 30px; 
+        padding: 8px 25px; 
+        margin: 5px;
+        transition: 0.3s;
+    }
+    .btn-filter.active, .btn-filter:hover { background: #ffc107; color: black; }
+    
+    .hide { display: none; }
+    .badge-cat { position: absolute; top: 10px; left: 10px; z-index: 10; padding: 8px 12px; border-radius: 20px; }
+
+    /* FOOTER ASLI */
+    .footer-custom { 
+      background-color: #ffc107; 
+      color: #212529; 
+      padding: 40px 0 20px 0; 
+      margin-top: 50px; 
+      width: 100%;
+    }
+
+    /* Waktu & Greeting */
+    #greeting-box {
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 20px;
+      border: 1px solid var(--primary-color);
+    }
+    #greeting-text { color: #ffc107; font-weight: bold; }
+    #digital-clock { color: #ffffff; font-weight: bold; letter-spacing: 2px; margin-left: 10px; padding-left: 10px; border-left: 1px solid rgba(255,255,255,0.3); }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-warning fixed-top shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="img/Logo 1.png" alt="logo" width="80" height="80" class="d-inline-block me-0">
+        <span class="fw-bold" style="font-size: 1rem;">Resep Nusantara</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="profil.html">Profile</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="resep.html">Resep</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="contact.html">Contact/Form</a></li> 
+        </ul>
+        <form class="d-flex ms-lg-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Cari foto...">
+          <button class="btn btn-dark" type="submit">Cari</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-banner">
+    <div class="container">
+      <div id="greeting-box">
+        <span id="greeting-text">Visual Gallery</span>
+        <span id="digital-clock">00:00:00</span>
+      </div>
+      <h1 class="display-4 fw-bold">GALERI NUSANTARA</h1>
+      <p>Koleksi hidangan autentik Indonesia yang menggugah selera.</p>
+    </div>
+  </header>
+
+  <div class="container-fluid px-4">
+    <div class="filter-container">
+        <button class="btn-filter active" onclick="filterGallery('all')">SEMUA</button>
+        <button class="btn-filter" onclick="filterGallery('makanan')">MAKANAN (10)</button>
+        <button class="btn-filter" onclick="filterGallery('minuman')">MINUMAN (10)</button>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4" id="gallery-wrapper">
+      
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 1.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 2.jpeg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 3.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 4.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 5.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 6.avif" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 7.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 8.webp" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 9.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery makanan"><div class="card h-100"><span class="badge bg-danger badge-cat">Makanan</span><img src="img/Makanan 10.jpg" class="card-img-top"></div></div>
+
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 1.jpeg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 2.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 3.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 4.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 5.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 6.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 7.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 8.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 9.jpg" class="card-img-top"></div></div>
+      <div class="col item-gallery minuman"><div class="card h-100"><span class="badge bg-primary badge-cat">Minuman</span><img src="img/Minuman 10.jpg" class="card-img-top"></div></div>
+    </div>
+  </div>
+
+  <footer class="footer-custom shadow-lg">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5 class="fw-bold">Tentang NusaFood</h5>
+          <p class="small mb-0">Platform pemesanan dan eksplorasi masakan nusantara yang menghubungkan Anda dengan cita rasa lokal.</p>
+        </div>
+        <div class="col-md-4 mb-4 text-center">
+          <h5 class="fw-bold">Hubungi Kami</h5>
+          <p class="small mb-0">WhatsApp: 0812-8873-9423<br>Email: support@nusafood.id</p>
+        </div>
+        <div class="col-md-4 mb-4 text-center text-md-end">
+          <h5 class="fw-bold">Ikuti Kami</h5>
+          <div class="d-flex justify-content-center justify-content-md-end gap-3 mt-2">
+            <a href="#" class="text-dark fs-4"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-dark fs-4"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-dark fs-4"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="bg-dark">
+      <div class="text-center mt-3">
+        <p class="mb-0 fw-bold small">© 2025 Resep Nusantara. Tugas Akhir Semester.</p>
+        <p class="mb-0 small text-muted mt-1">Nama: Jhoan Imanuel Lawarissa | NIM: 251011700240 | Kelas: 01SIFP004</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Fungsi Filter
+    function filterGallery(category) {
+        const items = document.querySelectorAll('.item-gallery');
+        const buttons = document.querySelectorAll('.btn-filter');
+
+        // Mengatur tombol aktif
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.innerText.toLowerCase().includes(category) || (category === 'all' && btn.innerText.includes('SEMUA'))) {
+                btn.classList.add('active');
+            }
+        });
+
+        // Logika memunculkan/menyembunyikan gambar
+        items.forEach(item => {
+            if (category === 'all' || item.classList.contains(category)) {
+                item.classList.remove('hide');
+            } else {
+                item.classList.add('hide');
+            }
+        });
+    }
+
+    // Jam Digital
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      const clockElement = document.getElementById('digital-clock');
+      if(clockElement) clockElement.innerText = h + ":" + m + ":" + s;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
